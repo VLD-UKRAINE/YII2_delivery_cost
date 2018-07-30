@@ -23,6 +23,8 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
+        'js/deliveryCalculator.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "avto". Таблица автомобилей.
+ * This is the model class for table "avto". Таблица имеющихся в наличии автомобилей.
  *
  * @property int $id_avto
  * @property string $model_avto

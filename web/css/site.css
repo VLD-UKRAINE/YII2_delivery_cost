@@ -2,7 +2,12 @@ html,
 body {
     height: 100%;
 }
-
+#map {
+    width: 80%;
+    height: 80%;
+    padding: 0;
+    margin: 100px;
+}
 .wrap {
     min-height: 100%;
     height: auto;
