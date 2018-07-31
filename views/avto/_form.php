@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+
     <?= $form->field($model, 'model_avto')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'capacity_avto')->textInput() ?>
