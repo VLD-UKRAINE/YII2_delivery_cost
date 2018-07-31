@@ -6,7 +6,7 @@ function init() {
     // Минимальная стоимость.
         MINIMUM_COST = 500,
         myMap = new ymaps.Map('map', {
-            center: [60.906882, 30.067233],
+            center: [59.922091, 30.368350],
             zoom: 9,
             controls: []
         }),
@@ -15,9 +15,11 @@ function init() {
             options: {
                 // Добавим заголовок панели.
                 showHeader: true,
+                maxWidth: '300px',
                 title: 'Расчёт доставки'
             }
         }),
+
         zoomControl = new ymaps.control.ZoomControl({
             options: {
                 size: 'small',
@@ -34,10 +36,10 @@ function init() {
     });
 
     // Если вы хотите задать неизменяемую точку "откуда", раскомментируйте код ниже.
-    /*routePanelControl.routePanel.state.set({
-        fromEnabled: false,
-        from: 'Москва, Льва Толстого 16'
-     });*/
+    // routePanelControl.routePanel.state.set({
+    //     fromEnabled: false,
+    //     from: 'Красное село, проспект Ленина 1'
+    //  });
 
     myMap.controls.add(routePanelControl).add(zoomControl);
 
@@ -45,7 +47,7 @@ function init() {
     routePanelControl.routePanel.getRouteAsync().then(function (route) {
 
         // Зададим максимально допустимое число маршрутов, возвращаемых мультимаршрутизатором.
-        route.model.setParams({results: 1}, true);
+        route.model.setParams({results: 2}, true);
 
         // Повесим обработчик на событие построения маршрута.
         route.model.events.add('requestsuccess', function () {

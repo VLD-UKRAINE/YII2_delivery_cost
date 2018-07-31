@@ -5,16 +5,16 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "staff". Таблица сотрудников.
+ * This is the model class for table "staff".
  *
  * @property int $id_staff
  * @property string $name_staff
  * @property string $soname_staff
  * @property string $phone_staff
- * @property string $notes_staff
  * @property string $email_staff
  * @property string $home_staff
  * @property string $role_staff
+ * @property string $notes_staff
  */
 class Staff extends \yii\db\ActiveRecord
 {
@@ -32,10 +32,9 @@ class Staff extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_staff', 'name_staff','phone_staff','role_staff'], 'required'],
-            [['id_staff'], 'integer'],
+            [['name_staff', 'soname_staff', 'phone_staff', 'email_staff', 'home_staff', 'role_staff', 'notes_staff'], 'required'],
             [['name_staff', 'soname_staff', 'phone_staff'], 'string', 'max' => 100],
-            [['notes_staff', 'email_staff', 'home_staff'], 'string', 'max' => 255],
+            [['email_staff', 'home_staff', 'notes_staff'], 'string', 'max' => 255],
             [['role_staff'], 'string', 'max' => 20],
         ];
     }
@@ -50,10 +49,14 @@ class Staff extends \yii\db\ActiveRecord
             'name_staff' => 'Имя',
             'soname_staff' => 'Фамилия',
             'phone_staff' => 'Телефон',
-            'notes_staff' => 'Примечания',
             'email_staff' => 'Email',
-            'home_staff' => 'Домашний адресс',
+            'home_staff' => 'Домашний адр',
             'role_staff' => 'Роль',
+            'notes_staff' => 'Примечания',
         ];
+    }
+
+    public function getOrders(){
+        return $this->hasMany(Orders::className(), ['id_staff_manager'=>'id_staff']);
     }
 }

@@ -5,14 +5,15 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "avto". Таблица имеющихся в наличии автомобилей.
+ * This is the model class for table "avto".
  *
  * @property int $id_avto
  * @property string $model_avto
  * @property double $capacity_avto
- * @property int $manipulator_avto
- * @property int $availability_avto
- * @property string $driver_avto
+ * @property double $space_avto
+ * @property string $manipulator_avto
+ * @property string $availability_avto
+ * @property int $driver_avto
  * @property string $r_number_avto
  * @property string $notes_avto
  */
@@ -32,11 +33,12 @@ class Avto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_avto', 'model_avto', 'capacity_avto'], 'required'],
-            [['id_avto', 'manipulator_avto', 'availability_avto'], 'integer'],
-            [['capacity_avto'], 'number'],
-            [['model_avto', 'driver_avto', 'r_number_avto', 'notes_avto'], 'string', 'max' => 255],
-            [['id_avto'], 'unique'],
+            [['model_avto', 'capacity_avto', 'space_avto', 'driver_avto', 'r_number_avto'], 'required'],
+            [['capacity_avto', 'space_avto'], 'number'],
+            [['manipulator_avto', 'availability_avto'], 'integer'],
+            [['driver_avto'], 'integer'],
+            [['model_avto', 'r_number_avto', 'notes_avto'], 'string', 'max' => 255],
+            [['driver_avto'], 'unique'],
         ];
     }
 
@@ -48,7 +50,8 @@ class Avto extends \yii\db\ActiveRecord
         return [
             'id_avto' => 'Id Avto',
             'model_avto' => 'Модель',
-            'capacity_avto' => 'Грузоподъемность',
+            'capacity_avto' => 'Грузопод',
+            'space_avto' => 'Объем',
             'manipulator_avto' => 'Манипулятор',
             'availability_avto' => 'Доступность',
             'driver_avto' => 'Водитель',

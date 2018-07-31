@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "clients". Таблица с данными заказчика.
+ * This is the model class for table "clients".
  *
  * @property int $id_clients
  * @property string $contact_name_clients
@@ -18,6 +18,7 @@ use Yii;
  * @property int $korp_clients
  * @property string $email_clients
  * @property int $office_clients
+ * @property string $notes_clients
  */
 class Clients extends \yii\db\ActiveRecord
 {
@@ -35,11 +36,10 @@ class Clients extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_clients', 'contact_name_clients', 'contact_phone_clients', 'street_clients', 'house_clients'], 'required'],
-            [['id_clients', 'zip_clients', 'house_clients', 'korp_clients', 'office_clients'], 'integer'],
-            [['contact_name_clients', 'street_clients', 'email_clients'], 'string', 'max' => 255],
+            [['contact_name_clients', 'contact_phone_clients', 'town_clients', 'street_clients', 'house_clients'], 'required'],
+            [['zip_clients', 'house_clients', 'korp_clients', 'office_clients'], 'integer'],
+            [['contact_name_clients', 'street_clients', 'email_clients', 'notes_clients'], 'string', 'max' => 255],
             [['contact_phone_clients', 'region_clients', 'town_clients'], 'string', 'max' => 100],
-            [['id_clients'], 'unique'],
         ];
     }
 
@@ -56,10 +56,15 @@ class Clients extends \yii\db\ActiveRecord
             'region_clients' => 'Область',
             'town_clients' => 'Город',
             'street_clients' => 'Улица',
-            'house_clients' => 'Номер дома',
-            'korp_clients' => 'Корпусs',
+            'house_clients' => 'Дом',
+            'korp_clients' => 'Корпус',
             'email_clients' => 'Email',
-            'office_clients' => 'Номер офиса',
+            'office_clients' => 'Офис',
+            'notes_clients' => 'Примечания',
         ];
+    }
+
+    public function getOrders(){
+        return $this->hasMany(Orders::className(), ['id_clients'=>'id_clients']);
     }
 }

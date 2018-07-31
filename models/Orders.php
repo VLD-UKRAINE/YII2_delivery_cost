@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "orders". Таблица заявок на перевозку.
+ * This is the model class for table "orders".
  *
  * @property int $id_orders
  * @property int $id_clients
@@ -34,12 +34,11 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_orders', 'id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'summ_orders', 'distance_orders', 'notes_orders'], 'required'],
-            [['id_orders', 'id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'pay_orders'], 'integer'],
+            [['id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'summ_orders', 'distance_orders', 'notes_orders'], 'required'],
+            [['id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'pay_orders'], 'integer'],
             [['time_orders'], 'safe'],
             [['summ_orders', 'distance_orders'], 'number'],
             [['notes_orders'], 'string', 'max' => 255],
-            [['id_orders'], 'unique'],
         ];
     }
 
