@@ -48,16 +48,16 @@ class Orders extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_orders' => 'Id Orders',
-            'id_clients' => 'Id Clients',
-            'id_avto' => 'Id Avto',
-            'id_staf_manager' => 'Id Staf Manager',
-            'id_staff_driver' => 'Id Staff Driver',
-            'time_orders' => 'Time Orders',
-            'pay_orders' => 'Pay Orders',
-            'summ_orders' => 'Summ Orders',
-            'distance_orders' => 'Distance Orders',
-            'notes_orders' => 'Notes Orders',
+            'id_orders' => 'Номер',
+            'id_clients' => 'Клиент',
+            'id_avto' => 'Авто',
+            'id_staf_manager' => 'Менеджер',
+            'id_staff_driver' => 'Водитель',
+            'time_orders' => 'Время заказа',
+            'pay_orders' => 'Статус платы',
+            'summ_orders' => 'Сумма ',
+            'distance_orders' => 'Расстояние',
+            'notes_orders' => 'Примечания',
         ];
     }
 }

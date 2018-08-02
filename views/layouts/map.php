@@ -26,7 +26,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
@@ -39,9 +39,10 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
-            ['label' => 'Автомобили', 'url' => ['/avto/index']],
-            ['label' => 'Клиенты', 'url' => ['/clients/index']],
-            ['label' => 'Сотрудники', 'url' => ['/staff/index']],
+//            ['label' => 'Заказы', 'url' => ['/orders/index']],
+//            ['label' => 'Автомобили', 'url' => ['/avto/index']],
+//            ['label' => 'Клиенты', 'url' => ['/clients/index']],
+//            ['label' => 'Сотрудники', 'url' => ['/staff/index']],
             Yii::$app->user->isGuest ? (
             ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (
@@ -59,12 +60,12 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+<div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= Alert::widget() ?>
-    </div>
+
 </div>
         <?= $content ?>
 

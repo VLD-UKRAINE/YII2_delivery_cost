@@ -2,11 +2,17 @@ html,
 body {
     height: 100%;
 }
+#avto {
+    margin-top: 50px;
+}
 #map {
-    width:60%;
-    height: 60%;
+    width:70%;
+    height: 70%;
     padding: 0;
-    margin: 100px auto;
+    margin: 20px auto;
+}
+.ymaps-2-1-68-route-panel-input__input {
+    color: #000000 !important;
 }
 .wrap {
     min-height: 100%;
@@ -101,7 +107,7 @@ a.desc:after {
     border: none;
 }
 
-@media(max-width:767px) {
+@media(max-width:1000px) {
     .nav li > form > button.logout {
         display:block;
         text-align: left;

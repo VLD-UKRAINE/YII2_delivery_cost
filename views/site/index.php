@@ -7,7 +7,7 @@ $this->title = 'Главная';
 
 \app\assets\MapAssets::register($this);
 ?>
-<div class="container">
+<div class="container" id="avto">
     <h3>
          Выбор автомобиля.
 

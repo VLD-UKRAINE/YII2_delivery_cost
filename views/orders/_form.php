@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_orders')->textInput() ?>
-
     <?= $form->field($model, 'id_clients')->textInput() ?>
 
     <?= $form->field($model, 'id_avto')->textInput() ?>
@@ -33,7 +31,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'notes_orders')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

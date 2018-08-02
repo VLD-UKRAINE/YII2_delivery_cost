@@ -18,6 +18,7 @@ class MapAssets extends AssetBundle
     ];
     public $js = [
         'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
+        //'js/multiroute_edit.js',
         'js/deliveryCalculator.js'
     ];
     public $depends = [

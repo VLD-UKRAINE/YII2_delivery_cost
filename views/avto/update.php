@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Редактировать авто: ' . $model->r_number_avto;
 $this->params['breadcrumbs'][] = ['label' => 'Авто', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->r_number_avto, 'url' => ['view', 'id' => $model->r_number_avto]];
+$this->params['breadcrumbs'][] = ['label' => $model->r_number_avto, 'url' => ['view', 'id' => $model->id_avto]];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>
 <div class="avto-update">
