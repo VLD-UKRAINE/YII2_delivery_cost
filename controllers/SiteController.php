@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Orders;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,6 +10,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\helpers\ArrayHelper;
+use app\models\Avto;
+
 
 class SiteController extends Controller
 {
@@ -61,8 +65,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Orders();
+        $data=ArrayHelper::map(Avto::find()->asArray()->all(), 'id_avto', 'model_avto');
         $this->layout ='map';
-        return $this->render('index');
+        return $this->render('index',[
+            'model'=>$model,
+            'data'=>$data,
+
+        ]);
     }
 
     /**
