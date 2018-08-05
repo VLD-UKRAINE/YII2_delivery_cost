@@ -19,10 +19,12 @@ class MapAssets extends AssetBundle
     public $js = [
         'https://api-maps.yandex.ru/2.1/?lang=ru_RU',
         //'js/multiroute_edit.js',
-        'js/deliveryCalculator.js'
+        'https://yandex.st/jquery/2.2.3/jquery.min.js',
+        'js/deliveryCalculator.js',
+        //'js/pojigon.js'
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        //'yii\web\YiiAsset',
+        //'yii\bootstrap\BootstrapAsset',
     ];
 }

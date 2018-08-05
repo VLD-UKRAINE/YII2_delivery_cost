@@ -1,9 +1,10 @@
 ﻿ymaps.ready(init);
 
 function init() {
+
     // Стоимость за километр.
     var DELIVERY_TARIFF = 20,
-    // Минимальная стоимость.
+        // Минимальная стоимость.
         MINIMUM_COST = 500,
 
         // Создадим панель маршрутизации.
@@ -15,7 +16,7 @@ function init() {
             }
         }),
 
-    zoomControl = new ymaps.control.ZoomControl({
+        zoomControl = new ymaps.control.ZoomControl({
             options: {
                 size: 'small',
                 float: 'none',
@@ -50,12 +51,14 @@ function init() {
             if (activeRoute) {
                 // Получим протяженность маршрута.
                 var length = route.getActiveRoute().properties.get("distance"),
-                // Вычислим стоимость доставки.
+                    // Вычислим стоимость доставки.
                     price = calculate(Math.round(length.value / 1000)),
-                // Создадим макет содержимого балуна маршрута.
+                    // Создадим макет содержимого балуна маршрута.
                     balloonContentLayout = ymaps.templateLayoutFactory.createClass(
                         '<span>Расстояние: ' + length.text + '.</span><br/>' +
-                        '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span>');
+                        '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span><br/>'+
+                        '<span style="font-weight: bold; font-style: italic">Позвоните нам: 1234567890</span><br/>'+
+                        '<span style="font-weight: bold; font-style: italic">ТОВ "Паровоз"</span>');
                 // Зададим этот макет для содержимого балуна.
                 route.options.set('routeBalloonContentLayout', balloonContentLayout);
                 // Откроем балун.
@@ -121,6 +124,31 @@ function init() {
 
     // Добавляем мультимаршрут на карту.
     myMap.geoObjects.add(multiRoute);
+
+    // Повесим обработчик на событие построения маршрута.
+    multiRoute.model.events.add('requestsuccess', function () {
+
+        var activeRoute = multiRoute.getActiveRoute();
+        if (activeRoute) {
+            // Получим протяженность маршрута.
+            var length = multiRoute.getActiveRoute().properties.get("distance"),
+                // Вычислим стоимость доставки.
+                price = calculate(Math.round(length.value / 1000)),
+                // Создадим макет содержимого балуна маршрута.
+                balloonContentLayout = ymaps.templateLayoutFactory.createClass(
+                    '<span>Расстояние: ' + length.text + '.</span><br/>' +
+                    '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span><br/>'+
+                    '<span style="font-weight: bold; font-style: italic">По городу 00км</span><br/>'+
+                    '<span style="font-weight: bold; font-style: italic">В 15 км зоне 00км</span><br/>'+
+                    '<span style="font-weight: bold; font-style: italic">По области 00км</span><br/>'+
+                    '<span style="font-weight: bold; font-style: italic">Позвоните нам: 1234567890</span><br/>'+
+                    '<span style="font-weight: bold; font-style: italic">ТОВ "Паровоз"</span>');
+            // Зададим этот макет для содержимого балуна.
+            multiRoute.options.set('routeBalloonContentLayout', balloonContentLayout);
+            // Откроем балун.
+            activeRoute.balloon.open();
+        }
+    });
 
     // Функция, вычисляющая стоимость доставки.
     function calculate(routeLength) {
