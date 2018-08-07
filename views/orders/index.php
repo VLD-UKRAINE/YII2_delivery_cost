@@ -24,7 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id_orders',
-            'id_clients',
+            [
+               'attribute'=>'id_clients',
+                'headerOptions'=>[
+                    'style'=>'text-align: center;',
+                ],
+                'contentOptions'=>[
+                    'style'=>'text-align: right;',
+                ],
+                'content'=>function($dataProvider){
+                    return $dataProvider->client['contact_name_clients'];
+                }
+            ],
+
             'id_avto',
             'id_staf_manager',
             'id_staff_driver',

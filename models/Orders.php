@@ -63,4 +63,18 @@ class Orders extends \yii\db\ActiveRecord
             'notes_orders' => 'Примечания',
         ];
     }
+    public function getClient(){
+        return $this->hasOne(Clients::className(), ['id_clients'=>'id_clients']);
+    }
+
+    public function getAvto(){
+        return $this->hasOne(Avto::className(), ['id_avto'=>'id_avto']);
+    }
+
+    public function getStaff(){
+        return $this->hasOne(Staff::className(), ['id_staff'=>'id_staf_manager']);
+    }
+
+
+
 }

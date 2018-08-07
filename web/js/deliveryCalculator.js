@@ -6,6 +6,10 @@ function init() {
     var DELIVERY_TARIFF = 20,
         // Минимальная стоимость.
         MINIMUM_COST = 500,
+        piterTownPolygon,
+        piter15Poligon,
+        piterOblPolygon;
+
 
         // Создадим панель маршрутизации.
         routePanelControl = new ymaps.control.RoutePanel({
@@ -118,11 +122,57 @@ function init() {
         center: [59.922091, 30.368350],
         zoom: 9,
         controls: [buttonEditor]
-    }),
-
+    });
         myMap.controls.add(routePanelControl).add(zoomControl);
 
-    // Добавляем мультимаршрут на карту.
+    //...............................Добавляем полигоны на карту ........
+    function TownPolygonLoad (json) {
+
+        piterTownPolygon = new ymaps.Polygon(json.coordinates);
+        console.log(json.coordinates);
+        // Если мы не хотим, чтобы контур был виден, зададим соответствующую опцию.
+        piterTownPolygon.options.set('visible', true);
+        piterTownPolygon.options.set('fillColor', "#D0FF00");
+        piterTownPolygon.options.set('draggable', false);
+        piterTownPolygon.options.set('fillOpacity', 0.1);
+
+        // Чтобы корректно осуществлялись геометрические операции
+        // над спроецированным многоугольником, его нужно добавить на карту.
+        myMap.geoObjects.add(piterTownPolygon);
+    }
+
+    function Z15PolygonLoad (json) {
+
+        piter15Poligon = new ymaps.Polygon(json.coordinates);
+        console.log(json.coordinates);
+        // Если мы не хотим, чтобы контур был виден, зададим соответствующую опцию.
+        piter15Poligon.options.set('visible', true);
+        piter15Poligon.options.set('fillColor', "#7388FF");
+        piter15Poligon.options.set('draggable', false);
+        piter15Poligon.options.set('fillOpacity', 0.3);
+
+        // Чтобы корректно осуществлялись геометрические операции
+        // над спроецированным многоугольником, его нужно добавить на карту.
+        myMap.geoObjects.add(piter15Poligon);
+    }
+    function OblPolygonLoad (json) {
+
+        piterOblPolygon = new ymaps.Polygon(json.coordinates);
+        console.log(json.coordinates);
+        // Если мы не хотим, чтобы контур был виден, зададим соответствующую опцию.
+        piterOblPolygon.options.set('visible', false);
+        piterOblPolygon.options.set('fillColor', "#49FF46");
+        piterOblPolygon.options.set('draggable', false);
+        piterOblPolygon.options.set('fillOpacity', 0.2);
+
+        // Чтобы корректно осуществлялись геометрические операции
+        // над спроецированным многоугольником, его нужно добавить на карту.
+        myMap.geoObjects.add(piterOblPolygon);
+    }
+
+    //...............................КОНЕЦ ПОЛИГОНОВ ........
+
+    // Добавляем мультимаршрут  на карту.
     myMap.geoObjects.add(multiRoute);
 
     // Повесим обработчик на событие построения маршрута.
@@ -154,4 +204,21 @@ function init() {
     function calculate(routeLength) {
         return Math.max(routeLength * DELIVERY_TARIFF, MINIMUM_COST);
     }
+
+
+    $.ajax({
+        url: 'piter-town',
+        dataType: 'json',
+        success: TownPolygonLoad
+    });
+    $.ajax({
+        url: 'piter-15',
+        dataType: 'json',
+        success: Z15PolygonLoad
+    });
+    $.ajax({
+        url: 'piter-obl',
+        dataType: 'json',
+        success: OblPolygonLoad
+    });
 }

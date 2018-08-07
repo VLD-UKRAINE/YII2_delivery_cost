@@ -42,7 +42,10 @@ class OrdersSearch extends Orders
      */
     public function search($params)
     {
-        $query = Orders::find();
+        $query = Orders::find()
+            ->with('client')
+            ->with('avto')
+            ->with('staff');
 
         // add conditions that should always apply here
 
