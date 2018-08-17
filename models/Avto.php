@@ -59,4 +59,7 @@ class Avto extends \yii\db\ActiveRecord
             'notes_avto' => 'Примечания',
         ];
     }
+    public function getOrders(){
+        return $this->hasMany(Orders::className(), ['id_avto'=>'id_avto']);
+    }
 }

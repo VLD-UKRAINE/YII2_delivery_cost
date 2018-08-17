@@ -115,10 +115,8 @@ class SiteController extends Controller
 ] }
         ';
     }
-    /**59.816073, 30.008495
-     * Displays homepage.
-     *
-     * @return string
+    /**
+        * @return string
      */
     public function actionIndex()
     {
@@ -194,4 +192,17 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionRaschet()
+    {
+           return 5;
+    }
+
+
 }

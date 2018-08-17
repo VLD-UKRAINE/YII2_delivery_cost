@@ -3,9 +3,9 @@
 function init() {
 
     // Стоимость за километр.
-    var DELIVERY_TARIFF = 20,
+    var DELIVERY_TARIFF = 25,
         // Минимальная стоимость.
-        MINIMUM_COST = 500,
+        MINIMUM_COST = 1800,
         piterTownPolygon,
         piter15Poligon,
         piterOblPolygon;
@@ -53,8 +53,10 @@ function init() {
 
             var activeRoute = route.getActiveRoute();
             if (activeRoute) {
+
                 // Получим протяженность маршрута.
                 var length = route.getActiveRoute().properties.get("distance"),
+
                     // Вычислим стоимость доставки.
                     price = calculate(Math.round(length.value / 1000)),
                     // Создадим макет содержимого балуна маршрута.
@@ -67,6 +69,13 @@ function init() {
                 route.options.set('routeBalloonContentLayout', balloonContentLayout);
                 // Откроем балун.
                 activeRoute.balloon.open();
+
+                $("#orders-distance_orders").val(Math.round(length.value / 1000));
+                $("#orders-summ_orders").val(price);
+                $("#orders-point_from").val(route.model.getWayPoints()[0].properties.get("address"));
+                $("#orders-point_to").val(route.model.getWayPoints()[1].properties.get("address"));
+
+
             }
         });
 
@@ -129,9 +138,9 @@ function init() {
     function TownPolygonLoad (json) {
 
         piterTownPolygon = new ymaps.Polygon(json.coordinates);
-        console.log(json.coordinates);
+        //console.log(json.coordinates);
         // Если мы не хотим, чтобы контур был виден, зададим соответствующую опцию.
-        piterTownPolygon.options.set('visible', true);
+        piterTownPolygon.options.set('visible', false);
         piterTownPolygon.options.set('fillColor', "#D0FF00");
         piterTownPolygon.options.set('draggable', false);
         piterTownPolygon.options.set('fillOpacity', 0.1);
@@ -144,9 +153,9 @@ function init() {
     function Z15PolygonLoad (json) {
 
         piter15Poligon = new ymaps.Polygon(json.coordinates);
-        console.log(json.coordinates);
+        //console.log(json.coordinates);
         // Если мы не хотим, чтобы контур был виден, зададим соответствующую опцию.
-        piter15Poligon.options.set('visible', true);
+        piter15Poligon.options.set('visible', false);
         piter15Poligon.options.set('fillColor', "#7388FF");
         piter15Poligon.options.set('draggable', false);
         piter15Poligon.options.set('fillOpacity', 0.3);
@@ -158,7 +167,7 @@ function init() {
     function OblPolygonLoad (json) {
 
         piterOblPolygon = new ymaps.Polygon(json.coordinates);
-        console.log(json.coordinates);
+        //console.log(json.coordinates);
         // Если мы не хотим, чтобы контур был виден, зададим соответствующую опцию.
         piterOblPolygon.options.set('visible', false);
         piterOblPolygon.options.set('fillColor', "#49FF46");
@@ -171,32 +180,58 @@ function init() {
     }
 
     //...............................КОНЕЦ ПОЛИГОНОВ ........
+//.........................Проведение расчетов........................
+     $("#orders-id_avto").on("change", function (e) {
+        var id = $("#orders-id_avto").select2("data")[0].id;
+        var text = $("#orders-id_avto").select2("data")[0].text;
+        $("#orders-id_avto").val(id);
+
+    });
+
+    $("#orders-zsd_orders").on("change", function (e) {
+              var id = $('input[type="checkbox"]:checked').val()
+        if(id==1){
+            var id =1;
+        } else {
+            var id =0;
+        }
+     });
+
+
+
+
+    // ........................КОНЕЦ РАСЧЕТОВ
 
     // Добавляем мультимаршрут  на карту.
     myMap.geoObjects.add(multiRoute);
 
     // Повесим обработчик на событие построения маршрута.
     multiRoute.model.events.add('requestsuccess', function () {
-
+                //console.log(multiRoute.model.getWayPoints()[1])
         var activeRoute = multiRoute.getActiveRoute();
         if (activeRoute) {
             // Получим протяженность маршрута.
             var length = multiRoute.getActiveRoute().properties.get("distance"),
+
                 // Вычислим стоимость доставки.
                 price = calculate(Math.round(length.value / 1000)),
                 // Создадим макет содержимого балуна маршрута.
                 balloonContentLayout = ymaps.templateLayoutFactory.createClass(
                     '<span>Расстояние: ' + length.text + '.</span><br/>' +
                     '<span style="font-weight: bold; font-style: italic">Стоимость доставки: ' + price + ' р.</span><br/>'+
-                    '<span style="font-weight: bold; font-style: italic">По городу 00км</span><br/>'+
-                    '<span style="font-weight: bold; font-style: italic">В 15 км зоне 00км</span><br/>'+
-                    '<span style="font-weight: bold; font-style: italic">По области 00км</span><br/>'+
+                    // '<span style="font-weight: bold; font-style: italic">По городу 00км</span><br/>'+
+                    // '<span style="font-weight: bold; font-style: italic">В 15 км зоне 00км</span><br/>'+
+                    // '<span style="font-weight: bold; font-style: italic">По области 00км</span><br/>'+
                     '<span style="font-weight: bold; font-style: italic">Позвоните нам: 1234567890</span><br/>'+
                     '<span style="font-weight: bold; font-style: italic">ТОВ "Паровоз"</span>');
             // Зададим этот макет для содержимого балуна.
             multiRoute.options.set('routeBalloonContentLayout', balloonContentLayout);
             // Откроем балун.
             activeRoute.balloon.open();
+
+            $("#orders-distance_orders").val(Math.round(length.value / 1000));
+            $("#orders-summ_orders").val(price);
+
         }
     });
 

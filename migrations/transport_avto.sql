@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost
--- Время создания: Авг 05 2018 г., 16:15
+-- Время создания: Авг 17 2018 г., 12:36
 -- Версия сервера: 10.1.26-MariaDB-0+deb9u1
 -- Версия PHP: 7.2.5-1+0~20180505045740.21+stretch~1.gbpca2fa6
 
@@ -74,7 +74,8 @@ INSERT INTO `categoriya` (`id_categoriya`, `name_categoriya`) VALUES
 (4, '10 т + манип'),
 (5, '20 т'),
 (6, '20 т + манип'),
-(7, '5т');
+(7, '5т'),
+(8, '2т');
 
 -- --------------------------------------------------------
 
@@ -109,7 +110,7 @@ INSERT INTO `clients` (`id_clients`, `contact_name_clients`, `contact_phone_clie
 
 -- --------------------------------------------------------
 
---
+
 -- Структура таблицы `orders`
 --
 
@@ -124,6 +125,8 @@ CREATE TABLE `orders` (
   `pay_orders` tinyint(1) NOT NULL DEFAULT '0',
   `summ_orders` double NOT NULL,
   `distance_orders` double NOT NULL,
+  `point_from` varchar(255) NOT NULL,
+  `point_to` varchar(255) NOT NULL,
   `notes_orders` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -131,10 +134,39 @@ CREATE TABLE `orders` (
 -- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `orders` (`id_orders`, `id_clients`, `id_avto`, `zsd_orders`, `id_staf_manager`, `id_staff_driver`, `time_orders`, `pay_orders`, `summ_orders`, `distance_orders`, `notes_orders`) VALUES
-(1, 2, 1, '0', 1, 2, '2018-07-31 14:36:54', 0, 3456, 34, 'После 13-00'),
-(2, 3, 2, '0', 2, 1, '2018-07-31 14:37:31', 0, 45667, 320, 'Чем раньше тем лучше'),
-(3, 4, 4, '0', 1, 1, '2018-07-31 14:38:02', 0, 300, 23, '');
+INSERT INTO `orders` (`id_orders`, `id_clients`, `id_avto`, `zsd_orders`, `id_staf_manager`, `id_staff_driver`, `time_orders`, `pay_orders`, `summ_orders`, `distance_orders`, `point_from`, `point_to`, `notes_orders`) VALUES
+(1, 2, 1, '0', 1, 2, '2018-07-31 14:36:54', 0, 3456, 34, '', '', 'После 13-00'),
+(2, 3, 2, '0', 2, 1, '2018-07-31 14:37:31', 1, 45667, 320, '', '', 'Чем раньше тем лучше'),
+(3, 4, 4, '0', 1, 1, '2018-07-31 14:38:02', 0, 300, 23, '', '', ''),
+(4, 2, 2, '0', 2, 2, '2018-08-15 14:45:14', 0, 1234, 23, '', '', 'ТЕСТ'),
+(5, 1, 3, '0', 2, 3, '2018-08-15 14:58:57', 0, 123423, 45, '', '', 'ТЕСТ'),
+(6, 4, 6, '0', 2, 3, '2018-08-15 16:18:14', 0, 123423, 23, '', '', 'ТЕСТ'),
+(7, 2, 2, '1', 2, 2, '2018-08-17 10:59:33', 0, 1800, 18, 'Россия, Санкт-Петербург, Голикова дорожка', 'Россия, Санкт-Петербург, Пушкинский район, посёлок Шушары', 'ТЕСТ'),
+(8, 2, 2, '1', 2, 3, '2018-08-17 11:53:22', 0, 1800, 80, 'Россия, Ленинградская область, Всеволожский район, Агалатовское сельское поселение', 'Россия, Ленинградская область, Ломоносовский район, Виллозское городское поселение, садовое товарищество Красногорское', 'ТЕСТ');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `price`
+--
+
+CREATE TABLE `price` (
+  `id_price` int(11) NOT NULL,
+  `id_categ_avto` int(11) UNSIGNED NOT NULL,
+  `price_min` decimal(19,2) DEFAULT NULL,
+  `price_h` decimal(19,2) DEFAULT NULL,
+  `price_km` decimal(19,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `price`
+--
+
+INSERT INTO `price` (`id_price`, `id_categ_avto`, `price_min`, `price_h`, `price_km`) VALUES
+(1, 1, '1800.00', '450.00', '15.00'),
+(2, 8, '3000.00', '600.00', '24.00'),
+(3, 7, '4200.00', '700.00', '25.00'),
+(4, 2, '5500.00', '800.00', '25.00');
 
 -- --------------------------------------------------------
 
@@ -180,7 +212,7 @@ CREATE TABLE `staff` (
 INSERT INTO `staff` (`id_staff`, `name_staff`, `soname_staff`, `phone_staff`, `email_staff`, `home_staff`, `role_staff`, `notes_staff`) VALUES
 (1, 'Саша', 'Петров', '641654165', 'цукуц', 'Вокзал', '1', ''),
 (2, 'Вася', 'Вася', '32432432', '32432432', '23432432', '3', ''),
-(3, 'Маша', 'Машина', '34324', '324324', '234234324', '3242343', '32423');
+(3, 'Маша', 'Машина', '34324', '324324', '234234324', '3', '32423');
 
 --
 -- Индексы сохранённых таблиц
@@ -206,10 +238,22 @@ ALTER TABLE `clients`
   ADD PRIMARY KEY (`id_clients`);
 
 --
+-- Индексы таблицы `migration`
+--
+ALTER TABLE `migration`
+  ADD PRIMARY KEY (`version`);
+
+--
 -- Индексы таблицы `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id_orders`);
+
+--
+-- Индексы таблицы `price`
+--
+ALTER TABLE `price`
+  ADD PRIMARY KEY (`id_price`);
 
 --
 -- Индексы таблицы `roles`
@@ -237,7 +281,7 @@ ALTER TABLE `avto`
 -- AUTO_INCREMENT для таблицы `categoriya`
 --
 ALTER TABLE `categoriya`
-  MODIFY `id_categoriya` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_categoriya` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `clients`
@@ -249,7 +293,13 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_orders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_orders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT для таблицы `price`
+--
+ALTER TABLE `price`
+  MODIFY `id_price` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `roles`

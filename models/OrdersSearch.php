@@ -19,7 +19,7 @@ class OrdersSearch extends Orders
     {
         return [
             [['id_orders', 'id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'pay_orders'], 'integer'],
-            [['time_orders', 'notes_orders'], 'safe'],
+            [['time_orders', 'notes_orders',  'point_from', 'point_to'], 'safe'],
             [['summ_orders', 'distance_orders'], 'number'],
         ];
     }
@@ -45,7 +45,8 @@ class OrdersSearch extends Orders
         $query = Orders::find()
             ->with('client')
             ->with('avto')
-            ->with('staff');
+            ->with('staff')
+            ->orderby('time_orders DESC');
 
         // add conditions that should always apply here
 
@@ -74,7 +75,10 @@ class OrdersSearch extends Orders
             'distance_orders' => $this->distance_orders,
         ]);
 
-        $query->andFilterWhere(['like', 'notes_orders', $this->notes_orders]);
+        $query->andFilterWhere(['like', 'zsd_orders', $this->zsd_orders])
+            ->andFilterWhere(['like', 'point_from', $this->point_from])
+            ->andFilterWhere(['like', 'point_to', $this->point_to])
+            ->andFilterWhere(['like', 'notes_orders', $this->notes_orders]);
 
         return $dataProvider;
     }

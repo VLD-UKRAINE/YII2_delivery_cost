@@ -15,6 +15,8 @@ use Yii;
  * @property int $id_staff_driver
  * @property string $time_orders
  * @property int $pay_orders
+ * @property string $point_from
+ * @property string $point_to
  * @property double $summ_orders
  * @property double $distance_orders
  * @property string $notes_orders
@@ -35,12 +37,12 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'summ_orders', 'distance_orders', 'notes_orders'], 'required'],
+            [['id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'summ_orders', 'distance_orders', 'point_from', 'point_to'], 'required'],
             [['id_clients', 'id_avto', 'id_staf_manager', 'id_staff_driver', 'pay_orders'], 'integer'],
             [['zsd_orders'], 'string'],
-            [['time_orders'], 'safe'],
+            [['time_orders', 'notes_orders'], 'safe'],
             [['summ_orders', 'distance_orders'], 'number'],
-            [['notes_orders'], 'string', 'max' => 255],
+            [['notes_orders', 'point_from', 'point_to'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,16 +52,18 @@ class Orders extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_orders' => 'Номер заказа',
+            'id_orders' => '№ Заказа',
             'id_clients' => 'Клиент',
             'id_avto' => 'Автомобиль',
             'zsd_orders' => 'Проезд по ЗСД',
             'id_staf_manager' => 'Сотрудник',
             'id_staff_driver' => 'Водитель',
             'time_orders' => 'Время заказа',
-            'pay_orders' => 'PСтатус оплаты',
+            'pay_orders' => 'Статус оплаты',
             'summ_orders' => 'Сумма заказа',
             'distance_orders' => 'Расстояние',
+            'point_from' => 'Погрузка',
+            'point_to' => 'Выгрузка',
             'notes_orders' => 'Примечания',
         ];
     }

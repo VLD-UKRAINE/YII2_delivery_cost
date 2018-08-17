@@ -2,12 +2,16 @@
 
 namespace app\controllers;
 
+use app\models\Clients;
+use app\models\Staff;
 use Yii;
 use app\models\Orders;
 use app\models\OrdersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use app\models\Avto;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -69,9 +73,15 @@ class OrdersController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_orders]);
         }
+        $avto=ArrayHelper::map(Avto::find()->asArray()->all(), 'id_avto', 'model_avto');
+        $client=ArrayHelper::map(Clients::find()->asArray()->all(), 'id_clients', 'contact_name_clients');
+        $staff=ArrayHelper::map(Staff::find()->asArray()->all(), 'id_staff', 'soname_staff');
 
         return $this->render('create', [
             'model' => $model,
+            'avto'=>$avto,
+            'client'=>$client,
+            'staff'=>$staff
         ]);
     }
 

@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_clients')->textInput() ?>
 
+    <?= $form->field($model, 'zsd_orders')->dropDownList([ '0', '1', ], ['prompt' => '']) ?>
+
     <?= $form->field($model, 'id_avto')->textInput() ?>
 
     <?= $form->field($model, 'id_staf_manager')->textInput() ?>
@@ -27,6 +29,10 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'summ_orders')->textInput() ?>
 
     <?= $form->field($model, 'distance_orders')->textInput() ?>
+
+    <?= $form->field($model, 'point_from')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'point_to')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'notes_orders')->textInput(['maxlength' => true]) ?>
 

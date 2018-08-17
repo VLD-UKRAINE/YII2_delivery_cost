@@ -16,6 +16,7 @@ $this->title = 'Главная';
 <div class="container" id="avto">
 <?php $form = ActiveForm::begin([
     'id' => 'avto-form',
+    'action' =>'@web/index.php/orders/create',
     'layout' => 'horizontal',
     'fieldConfig' => [
         'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
@@ -35,16 +36,21 @@ $this->title = 'Главная';
 
     <?= $form->field($model, 'zsd_orders')->checkbox(['0', '1',]) ?>
 
-    <?php ActiveForm::end(); ?>
+
 </div>
 <div id="map">
 
-
-
 </div>
 <div class="container">
-<h3>
-    Расчет стоимости.
-
-</h3>
+    <?= $form->field($model, 'distance_orders')->hiddenInput(['value'=> ''])->label(false)?>
+    <?= $form->field($model, 'summ_orders')->hiddenInput(['value'=> ''])->label(false)?>
+    <?= $form->field($model, 'point_from')->hiddenInput(['value'=> ''])->label(false)?>
+    <?= $form->field($model, 'point_to')->hiddenInput(['value'=> ''])->label(false)?>
+    <div class="form-group">
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
+        <p>
+            *сохранение работает только для простого маршрута
+        </p>
+    </div>
+    <?php ActiveForm::end(); ?>
 </div>
